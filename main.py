@@ -57,7 +57,7 @@ class SortToc(Tool):
         for name, _ in container.spine_names:
             if name in toc_node_map:
                 # Retrieve the node from the mapping
-                node, lvl = toc_node_map[name]
+                node, lvl = toc_node_map.pop(name)
                 # Navigate to the correct level in the TOC
                 toc = toc_root
                 for _ in range(lvl):
@@ -68,9 +68,10 @@ class SortToc(Tool):
                 # Add the node to the TOC root
                 toc.add(node.title, node.dest, node.frag)
 
+
         # Commit the new TOC
         commit_toc(container, toc_root)
 
         # Show a message to the user
-        det_msg = "The following ToC entries had their depth adjusted:\n%s" % "\n".join(node.title for node in adjusted_lvls)
+        det_msg = "The following ToC entries had their depth adjusted:\n%s\nThe following ToC entries have been removed:\n%s" % ("\n".join(node.title for node in adjusted_lvls), "\n".join(node.title for node, lvl in toc_node_map.values()))
         info_dialog(self.gui, 'Success', 'The Table of Contents has been sorted in order of the spine.', det_msg=det_msg, show=True)
