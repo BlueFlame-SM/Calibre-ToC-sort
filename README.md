@@ -5,4 +5,4 @@ The plugin tries to maintain nesting as much as possible, but this cannot always
 Also note that chapters not in the spine and duplicate links will be removed.
 
 ## TODO:
-- [] Add support for multiple links to the same file.
+- [ ] Add support for multiple links to the same file.
